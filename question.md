@@ -90,9 +90,9 @@
         href='https://ru.hexlet.io/blog/posts/lokalnoe-hranilische-vs-sessionnoe-hranilische-vs-cookie'>hexlet.io</a></i>
   </p>
 </details>
-
 <br>
-<b>CSS</b>
+
+### CSS
 
 <details>
   <summary>Что такое селекторы?</summary>
@@ -215,9 +215,9 @@
     </li>
   </ul>
 </details>
-
 <br>
-<b>JavaScript</b>
+
+### JavaScript
 
 <details>
   <summary>Что такое Hoisting?</summary>
@@ -237,6 +237,7 @@
       message='Hoisting is all the rage!'
     }
     hoist(); // Вывод: undefined
+
   </code>
     </li>
     <li>
@@ -245,9 +246,10 @@
       <p>Вкратце, это просто говорит о том, что область видимости переменной привязана к блоку, в котором она объявлена, а не к функции в которой она объявлена.</p>
   <code>
 
-    console.log(hoist); // Вывод: ReferenceError: hoist is not defined 
+    console.log(hoist); // Вывод: ReferenceError: hoist is not defined
     ...
     let hoist = 'The variable has been hoisted.';
+
   </code>
     </li>
     <li>
@@ -265,6 +267,7 @@
     function hoisted() {
       console.log('This function has been hoisted.');
     };
+
   </code>
         <p>Функциональные выражения, однако, не поднимаются.</p>
   <code>
@@ -273,10 +276,361 @@
     var expression = function() {
       console.log('Will this work?');
     };
+
   </code>
   <p>1. Используя es5 переменную var, попытки использования необъявленных переменных приведут к тому, что переменной будет назначено значение undefined при «поднятии».</p>
   <p>2. Используя переменные es6 let и const, использование переменных приведет к Reference Error, потому что переменная останется неинициализированной при выполнении.</p>
   <p><i>Источник: <a href='https://medium.com/@stasonmars/%D1%80%D0%B0%D0%B7%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC%D1%81%D1%8F-%D1%81-%D0%BF%D0%BE%D0%B4%D0%BD%D1%8F%D1%82%D0%B8%D0%B5%D0%BC-hoisting-%D0%B2-javascript-7d2d27bc51f1'>medium.com</a></i></p>
+</details>
+
+<details>
+<summary>Apply, call, bind. Для чего используются? В чем отличия?</summary>
+
+- _call_
+
+Метод call() вызывает функцию с указанным значением this и индивидуально предоставленными аргументами. Вы можете присваивать различные объекты this при вызове существующей функции. this ссылается на текущий объект, вызвавший объект. С помощью call вы можете написать метод один раз, а затем наследовать его в других объектах, без необходимости переписывать метод для каждого нового объекта.
+
+```javascript
+function showFullName() {
+  alert(this.firstName + " " + this.lastName);
+}
+
+const user = {
+  firstName: "Василий",
+  lastName: "Петров",
+};
+
+// функция вызовется с this=user
+showFullName.call(user); // "Василий Петров"
+```
+
+- _apply_
+
+Метод apply() вызывает функцию с указанным значением this и аргументами, предоставленными в виде массива (либо массивоподобного объекта). Вы можете присваивать различные объекты this при вызове существующей функции. this ссылается на текущий объект, вызывающий объект. С помощью apply() вы можете написать метод один раз, а затем наследовать его в других объектах без необходимости переписывать метод для каждого нового объекта.
+
+```javascript
+//эти две строчки сработают одинаково:
+showFullName.call(user, "firstName", "surname");
+showFullName.apply(user, ["firstName", "surname"]);
+```
+
+```javascript
+var arr = [];
+arr.push(1);
+arr.push(5);
+arr.push(2);
+
+// получить максимум из элементов arr
+alert(Math.max.apply(null, arr)); // 5
+```
+
+Преимущество apply() перед call() отчётливо видно, когда мы формируем массив аргументов динамически.
+
+- _bind_
+
+Метод bind() создаёт новую функцию, которая при вызове устанавливает в качестве контекста выполнения this предоставленное значение. В метод также передаётся набор аргументов, которые будут установлены перед переданными в привязанную функцию аргументами при её вызове.
+
+```javascript
+// Пример потери контекста
+var user = {
+  firstName: "Вася",
+  sayHi: function () {
+    alert(this.firstName);
+  },
+};
+
+setTimeout(user.sayHi, 1000); // undefined (не Вася!)
+```
+
+```javascript
+// привязка контекста
+var user = {
+  firstName: "Вася",
+  sayHi: function () {
+    alert(this.firstName);
+  },
+};
+
+setTimeout(user.sayHi.bind(user), 1000); // Вася
+```
+
+Вызов bind часто используют для привязки функции к контексту, чтобы затем присвоить её в обычную переменную и вызывать уже без явного указания объекта.
+
+- фундаментальное различие между этими методами заключается в том, что функция call() принимает список аргументов, в то время, как функция apply() - одиночный массив аргументов. Методы call/apply вызывают функцию с заданным контекстом и аргументами. А bind не вызывает функцию. Он только возвращает «обёртку», которую мы можем вызвать позже, и которая передаст вызов в исходную функцию, с привязанным контекстом.
+
+Подробнее:
+
+https://learn.javascript.ru/call-apply
+
+https://learn.javascript.ru/bind
+
+</details>
+
+<details>
+  <summary>Методы массива, перебирающие элементы массива</summary>
+
+- _forEach_
+  Метод «Array.prototype.forEach(callback[, thisArg])» используется для перебора массива.
+  Он для каждого элемента массива вызывает функцию callback.
+  Этой функции он передаёт три параметра callback(item, i, arr):
+
+item – очередной элемент массива.
+
+i – его номер.
+
+arr – массив, который перебирается.
+
+Например:
+
+```javascript
+let arr = ["Яблоко", "Апельсин", "Груша"];
+
+arr.forEach(function (item, i, arr) {
+  alert(i + ": " + item + " (массив:" + arr + ")");
+});
+```
+
+Второй, необязательный аргумент forEach позволяет указать контекст this для callback.
+Метод forEach ничего не возвращает, его используют только для перебора, как более «элегантный» вариант, чем обычный цикл for.
+
+- _filter_
+  Метод «Array.prototype.filter(callback[, thisArg])» используется для фильтрации массива через функцию.
+  Он создаёт новый массив, в который войдут только те элементы arr, для которых вызов callback(item, i, arr) возвратит true.
+
+Например:
+
+```javascript
+let arr = [1, -1, 2, -2, 3];
+
+let positiveArr = arr.filter(function (number) {
+  return number > 0;
+});
+
+alert(positiveArr); // 1,2,3
+```
+
+- _map_
+  Метод «Array.prototype.map(callback[, thisArg])» используется для трансформации массива.
+  Он создаёт новый массив, который будет состоять из результатов вызова callback(item, i, arr) для каждого элемента arr.
+
+Например:
+
+```javascript
+let names = ["HTML", "CSS", "JavaScript"];
+
+let nameLengths = names.map(function (name) {
+  return name.length;
+});
+
+// получили массив с длинами
+alert(nameLengths); // 4,3,10
+```
+
+- _every/some_
+
+Эти методы используются для проверки массива.
+
+Метод «Array.prototype.every(callback[, thisArg])» возвращает true, если вызов callback вернёт true для каждого элемента arr.
+Метод «Array.prototype.some(callback[, thisArg])» возвращает true, если вызов callback вернёт true для какого-нибудь элемента arr.
+
+```javascript
+let arr = [1, -1, 2, -2, 3];
+
+function isPositive(number) {
+  return number > 0;
+}
+
+alert(arr.every(isPositive)); // false, не все положительные
+alert(arr.some(isPositive)); // true, есть хоть одно положительное
+```
+
+- _reduce/reduceRight_
+
+Метод «Array.prototype.reduce(callback[, initialValue])» используется для последовательной обработки каждого элемента массива с сохранением промежуточного результата.
+Метод reduce используется для вычисления на основе массива какого-либо единого значения, иначе говорят «для свёртки массива». Чуть далее мы разберём пример для вычисления суммы.
+Он применяет функцию callback по очереди к каждому элементу массива слева направо, сохраняя при этом промежуточный результат.
+
+Аргументы функции callback(previousValue, currentItem, index, arr):
+
+previousValue – последний результат вызова функции, он же «промежуточный результат».
+currentItem – текущий элемент массива, элементы перебираются по очереди слева-направо.
+
+index – номер текущего элемента.
+
+arr – обрабатываемый массив.
+
+Кроме callback, методу можно передать «начальное значение» – аргумент initialValue. Если он есть, то на первом вызове значение previousValue будет равно initialValue, а если у reduce нет второго аргумента, то оно равно первому элементу массива, а перебор начинается со второго.
+
+Пример:
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// для каждого элемента массива запустить функцию,
+// промежуточный результат передавать первым аргументом далее
+let result = arr.reduce(function (sum, current) {
+  return sum + current;
+}, 0);
+
+alert(result); // 15
+```
+
+При первом запуске sum – исходное значение, с которого начинаются вычисления, равно нулю (второй аргумент reduce).
+Сначала анонимная функция вызывается с этим начальным значением и первым элементом массива, результат запоминается и передаётся в следующий вызов, уже со вторым аргументом массива, затем новое значение участвует в вычислениях с третьим аргументом и так далее.
+
+Подробнее:
+
+https://learn.javascript.ru/array-iteration
+
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+
+</details>
+
+<details>
+  <summary>Promises</summary>
+
+Для того чтобы поиграться с запросами, можно использовать открытый API http://jsonplaceholder.typicode.com/
+
+Объект Promise (обещание) используется для отложенных и асинхронных вычислений. Promise может находиться в трёх состояниях:
+
+- ожидание (pending): начальное состояние, не выполнено и не отклонено.
+- выполнено (fulfilled): операция завершена успешно.
+- отклонено (rejected): операция завершена с ошибкой.
+
+```javascript
+// Создаётся объект promise
+let promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    // переведёт промис в состояние fulfilled с результатом "result"
+    resolve("result");
+  }, 1000);
+});
+
+// promise.then навешивает обработчики на успешный результат или ошибку
+promise.then(
+  (result) => {
+    // первая функция-обработчик - запустится при вызове resolve
+    alert("Fulfilled: " + result); // result - аргумент resolve
+  },
+  (error) => {
+    // вторая функция - запустится при вызове reject
+    alert("Rejected: " + error); // error - аргумент reject
+  }
+);
+```
+
+https://learn.javascript.ru/promise
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+</details>
+
+<details>
+  <summary>Prototype. Отличия proto от prototype. Пример наследования</summary>
+  
+Объекты в JavaScript можно организовать в цепочки так, чтобы свойство, не найденное в одном объекте, автоматически искалось бы в другом.
+Связующим звеном выступает специальное свойство __proto__.
+Если один объект имеет специальную ссылку __proto__ на другой объект, то при чтении свойства из него, если свойство отсутствует в самом объекте, оно ищется в объекте __proto__.
+```javascript
+var animal = {
+  eats: true
+};
+var rabbit = {
+  jumps: true
+};
+
+rabbit.**proto** = animal;
+
+// в rabbit можно найти оба свойства
+console.log( rabbit.jumps ); // true
+console.log( rabbit.eats ); // true
+
+````
+Объект, на который указывает ссылка __proto__, называется «прототипом». В данном случае получилось, что animal является прототипом для rabbit.
+У объекта, который является __proto__, может быть свой __proto__, у того – свой, и так далее. При этом свойства будут искаться по цепочке.
+__proto__ не работает в IE10.
+К счастью, в JavaScript с древнейших времён существует альтернативный, встроенный в язык и полностью кросс-браузерный способ.
+Чтобы новым объектам автоматически ставить прототип, конструктору ставится свойство prototype.
+При создании объекта через new, в его прототип __proto__ записывается ссылка из prototype функции-конструктора.
+
+Например, код ниже полностью аналогичен предыдущему, но работает всегда и везде:
+```javascript
+let animal = {
+  eats: true
+};
+
+function Rabbit(name) {
+  this.name = name;
+}
+
+Rabbit.prototype = animal;
+
+let rabbit = new Rabbit("Кроль"); //  rabbit.__proto__ == animal
+
+alert( rabbit.eats ); // true
+````
+
+Установка Rabbit.prototype = animal буквально говорит интерпретатору следующее: "При создании объекта через new Rabbit запиши ему **proto** = animal".
+Свойство prototype имеет смысл только у конструктора
+Свойство с именем prototype можно указать на любом объекте, но особый смысл оно имеет, лишь если назначено функции-конструктору.
+Само по себе, без вызова оператора new, оно вообще ничего не делает, его единственное назначение – указывать **proto** для новых объектов.
+
+Пример наследования:
+
+```javascript
+// 1. Конструктор Animal
+function Animal(name) {
+  this.name = name;
+  this.speed = 0;
+}
+
+// 1.1. Методы -- в прототип
+
+Animal.prototype.stop = function () {
+  this.speed = 0;
+  alert(this.name + " стоит");
+};
+
+Animal.prototype.run = function (speed) {
+  this.speed += speed;
+  alert(this.name + " бежит, скорость " + this.speed);
+};
+
+// 2. Конструктор Rabbit
+function Rabbit(name) {
+  this.name = name;
+  this.speed = 0;
+  1;
+}
+
+// 2.1. Наследование
+Rabbit.prototype = Object.create(Animal.prototype);
+Rabbit.prototype.constructor = Rabbit;
+
+// 2.2. Методы Rabbit
+Rabbit.prototype.jump = function () {
+  this.speed++;
+  alert(this.name + " прыгает, скорость " + this.speed);
+};
+```
+
+Подробнее:
+
+http://learn.javascript.ru/class-inheritance
+
+http://learn.javascript.ru/prototype
+
+http://learn.javascript.ru/new-prototype
+
 </details>
 
 <details>
@@ -386,9 +740,9 @@
       <code>
 
         function myFunction() {
-          console.log(arguments);  
+          console.log(arguments);
         }
-          
+
         myFunction('a', 'b'); // { 0: 'a', 1: 'b'}
 
   </code>
@@ -402,7 +756,7 @@
           }
           myArrowFunction('c', 'd');
         }
-          
+
         myRegularFunction('a', 'b'); // { 0: 'a', 1: 'b' }
 
   </code>
@@ -441,4 +795,49 @@
 <details>
   <summary>Что такое всплытие?</summary>
   
+</details>
+<br>
+
+### React
+
+<details>
+  <summary>Какие методы жизненного цикла компонента существуют в React?</summary>
+  
+- render() — единственный обязательный метод в классовом компоненте.
+При вызове он проверяет this.props и this.state и возвращает один из следующих вариантов: Элемент React, Массивы и фрагменты, Порталы, Строки и числа, Booleans или null
+
+- constructor() - Конструктор компонента React вызывается до того, как компонент будет примонтирован. В начале конструктора необходимо вызывать super(props). Если это не сделать, this.props не будет определён. Это может привести к багам.
+  Конструкторы в React обычно используют для двух целей: Инициализация внутреннего состояния через присвоение объекта this.state. Привязка обработчиков событий к экземпляру.
+  Конструктор — единственное место, где можно напрямую изменять this.state. В остальных методах необходимо использовать this.setState().
+
+- componentDidMount() - вызывается сразу после монтирования (то есть, вставки компонента в DOM). В этом методе должны происходить действия, которые требуют наличия DOM-узлов. Это хорошее место для создания сетевых запросов.
+  Этот метод подходит для настройки подписок. Но не забудьте отписаться от них в componentWillUnmount().
+
+- componentDidUpdate(prevProps, prevState, snapshot) - вызывается сразу после обновления. Не вызывается при первом рендере. Метод позволяет работать с DOM при обновлении компонента. Также он подходит для выполнения таких сетевых запросов, которые выполняются на основании результата сравнения текущих пропсов с предыдущими. Если пропсы не изменились, новый запрос может и не требоваться.
+
+- componentWillUnmount() - вызывается непосредственно перед размонтированием и удалением компонента. В этом методе выполняется необходимый сброс: отмена таймеров, сетевых запросов и подписок, созданных в componentDidMount().
+
+- shouldComponentUpdate(nextProps, nextState) - вызывается перед рендером, когда получает новые пропсы или состояние. Значение по умолчанию равно true. Этот метод нужен только для повышения производительности.. Но не опирайтесь на его возможность «предотвратить» рендер, это может привести к багам. Вместо этого используйте PureComponent, который позволяет не описывать поведение shouldComponentUpdate() вручную. PureComponent поверхностно сравнивает пропсы и состояние и позволяет не пропустить необходимое обновление.
+
+- static getDerivedStateFromProps(props, state) - вызывается непосредственно перед вызовом метода render, как при начальном монтировании, так и при последующих обновлениях. Он должен вернуть объект для обновления состояния или null, чтобы ничего не обновлять.
+  Этот метод существует для редких случаев, когда состояние зависит от изменений в пропсах.
+
+- getSnapshotBeforeUpdate(prevProps, prevState) - вызывается прямо перед этапом «фиксирования» (например, перед добавлением в DOM). Он позволяет вашему компоненту брать некоторую информацию из DOM (например, положение прокрутки) перед её возможным изменением. Любое значение, возвращаемое этим методом жизненного цикла, будет передано как параметр componentDidUpdate().
+
+- static getDerivedStateFromError(error) - Этот метод жизненного цикла вызывается после возникновения ошибки у компонента-потомка. Он получает ошибку в качестве параметра и возвращает значение для обновления состояния. getDerivedStateFromError() вызывается во время этапа «рендера». Поэтому здесь запрещены любые побочные эффекты, но их можно использовать в componentDidCatch().
+
+- componentDidCatch(error, info) - Этот метод жизненного цикла вызывается после возникновения ошибки у компонента-потомка. Он получает два параметра: error — перехваченная ошибка, info — объект с ключом componentStack, содержащий информацию о компоненте, в котором произошла ошибка. Метод можно использовать для логирования ошибок.
+
+<img src='https://camo.githubusercontent.com/5de529ff1ae2c01cbb863f8f49123384959b23f317e4a76f7bd58be8b08b7434/68747470733a2f2f63646e2d696d616765732d312e6d656469756d2e636f6d2f6d61782f313630302f312a6350777655685a726e423164745a6e6a4245665866412e706e67'>
+
+</details>
+
+<details>
+  <summary>Что такое Virtual DOM (VDOM)</summary>
+
+  Виртуальный DOM (VDOM) — это концепция программирования, в которой идеальное или «виртуальное» представление пользовательского интерфейса хранится в памяти и синхронизируется с «настоящим» DOM при помощи библиотеки, такой как ReactDOM. Этот процесс называется согласованием.
+
+  Такой подход и делает API React декларативным: вы указываете, в каком состоянии должен находиться пользовательский интерфейс, а React добивается, чтобы DOM соответствовал этому состоянию. Это абстрагирует манипуляции с атрибутами, обработку событий и ручное обновление DOM, которые в противном случае пришлось бы использовать при разработке приложения.
+
+  https://ru.reactjs.org/docs/faq-internals.html#gatsby-focus-wrapper
 </details>
