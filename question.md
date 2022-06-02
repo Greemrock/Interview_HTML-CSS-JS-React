@@ -915,8 +915,8 @@ http://learn.javascript.ru/new-prototype
   <summary>Разница межды func expression и declaration?</summary>
   <p>Function Declaration - функция, объявленная в основном потоке кода.</p>
   <p>Function Expression - объявление функции в контексте какого-либо выражения, например присваивания.</p>
-  <code>
 
+```javascript
     // Function Declaration
     sayHi("Вася"); // Привет, Вася
 
@@ -930,8 +930,8 @@ http://learn.javascript.ru/new-prototype
     var sayHi = function(name) {
       console.log( "Привет, " + name );
     }
+```
 
-  </code>
   <p>Основное отличие между ними: функции, объявленные как Function Declaration, создаются интерпретатором до выполнения кода.</p>
   <p>Это из-за того, что JavaScript перед запуском кода ищет в нём Function Declaration (их легко найти: они не являются частью выражений и начинаются со слова function) и обрабатывает их. А Function Expression создаются в процессе выполнения выражения, в котором созданы, в данном случае – функция будет создана при операции присваивания sayHi = function...</p>
 </details>

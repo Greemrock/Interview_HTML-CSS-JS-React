@@ -1,8 +1,15 @@
 // "Дaнa зaдaчa, что будeт вывeдeно в консоль:
 
-var employeeId = '1234abe';
+var employeeId = 1;
 
 (function() {
   console.log(employeeId); // undefined
-  var employeeId = '122345';
+
+  if (employeeId) {
+    var employeeId = 2;
+  }
+  
+  console.log(employeeId) // undefined
+  var employeeId = 2;
+  console.log(employeeId) // 2
 })();
