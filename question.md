@@ -1121,6 +1121,87 @@ JSX расшифровывается как Java Script XML.
 </details>
 
 <details>
+  <summary>Какие хуки есть в React</summary>
+    Хуки:
+    
+    - useState;
+    - useEffect;
+    - useContext;
+    - useReducer;
+    - useMemo;
+    - useCallback;
+    - useRef;
+    - useLayoutEffect;
+
+</details>
+
+
+<details>
+  <summary>Контролируемые и неконтролируемые компоненты в React</summary>
+
+## Неуправляемые компоненты
+
+Они запоминают всё, что вы печатали. Затем вы можете получить их значение, используя ref.
+Например, в обработчике onClick:
+
+```javascript
+  class Form extends Component {
+    handleSubmitClick = () => {
+      const name = this._name.value;
+      // do something with `name`
+    }
+    render() {
+      return (
+        <div>
+          <input type="text" ref={input => this._name = input} />
+          <button onClick={this.handleSubmitClick}>Sign up</button>
+        </div>
+      );
+    }
+  }
+```
+
+Другими словами, вам необходимо «вытащить» значения из поля, когда вам это нужно. Это можно сделать при отправке формы.
+
+Это самый простой способ реализации форм. Конечно, должны быть веские основания для его использования, а именно: самые простейшие формы либо во время изучения React.
+Однако этот способ не такой гибкий, поэтому давайте лучше посмотрим на управляемые компоненты.
+
+## Управляемые компоненты
+
+Управляемый компонент принимает свое текущее значение в качестве пропсов, а также коллбэк для изменения этого значения. Вы можете сказать, что это более “реактивный” способ управления компонентом, однако это не означает, что вы всегда должны использовать этот метод.
+
+```javascript
+class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+    };
+  }
+
+  handleNameChange = (event) => {
+    this.setState({ name: event.target.value });
+  };
+
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          value={this.state.name}
+          onChange={this.handleNameChange}
+        />
+      </div>
+    );
+  }
+}
+```
+
+<img src='https://i.imgur.com/D5u8pqE.png'>
+
+</details>
+
+<details>
   <summary>Что такое refs в React?</summary>
 
 Сокращенно от References. Специальный атрибут, позволяющий получить доступ до
