@@ -1091,6 +1091,7 @@ https://learn.javascript.ru/event-bubbling
   <summary>Что такое EventLoop?</summary>
 
   ![](https://joprblob.azureedge.net/site/blog/8e147efe-422d-42c3-bb51-61ca50d660dc/event.png)
+  ![](https://miro.medium.com/max/1400/1*_0CnS0bHNX7HMBLri3gNng.gif)
 
 </details>
 
