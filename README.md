@@ -189,6 +189,26 @@ hasDuplicates(nums); //true
 </details>
 
 <details>
+  <summary>Какие типы данных существуют?</summary>
+
+Стандарт ECMAScript определяет 8 типов:
+- 6 типов данных являющихся примитивами:
+  - Undefined (Неопределённый тип) : typeof instance === "undefined"
+  - Boolean (Булев, Логический тип) : typeof instance === "boolean"
+  - Number (Число) : typeof instance === "number"
+  - String (Строка) : typeof instance === "string"
+  - BigInt : typeof instance === "bigint"
+  - Symbol (в ECMAScript 6) : typeof instance === "symbol"
+- Null (Null тип ) : typeof instance === "object". Специальный примитив, используемый не только для данных но и в качестве указателя на финальную точку в Цепочке Прототипов;
+- Object (Объект) : typeof instance === "object". Простая структура, используемая не только для хранения данных, но и для создания других структур, где любая структура создаётся с использованием ключевого слова new: new Object, new Array, new Map (en-US), new Set, new WeakMap, new WeakSet, new Date и множество других структур;
+
+И здесь нам необходимо сделать предостережение относительно использования оператора typeof для определения типа структур, т.к. все структуры будут возвращать "object" при его использовании, так как назначение typeof -- проверка типа данных, но не структур. Если проверить тип структуры всё же необходимо, то в этом случае желательно использовать оператор instanceof, так как именно он отвечает на вопрос о том, какой конструктор был использован для создания структуры.
+
+Источник: [developer.mozilla.org](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures)
+</details>
+
+
+<details>
   <summary>Патерны</summary>
 
   Патерны проектирования — проверенный способ для решения проблем.
