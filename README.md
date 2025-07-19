@@ -1603,6 +1603,13 @@ promise.then(
 );
 ```
 
+Методы:
+
+- Promise.all - Ожидает выполнения всех промисов в массиве. Если хотя бы один промис rejected — возвращает ошибку.
+- Promise.race - Возвращает результат первого завершившегося промиса (fulfilled или rejected).
+- Promise.allSettled - Ожидает завершения всех промисов, возвращает массив объектов с результатами для каждого промиса (fulfilled или rejected).
+- Promise.any - Ожидает первый успешно завершившийся промис (fulfilled). Если все промисы rejected — возвращает ошибку.
+
 https://learn.javascript.ru/promise
 https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
