@@ -32,13 +32,13 @@ interface Todo {
 
 type T = keyof Todo;
 
-const arr: T = 'title';
+const arr: T = "title";
 
 // ============= Solution ==============
 type MyPick<T, K extends keyof T> = {
   [P in K]: T[P];
 };
-
+type PickA = Pick<Todo, "title">;
 // ============= Test Cases =============
 type MyPickTodoTitle = MyPick<Todo, "title">;
 type MyPickTodoCompleted = MyPick<Todo, "completed">;
@@ -86,3 +86,4 @@ const MyPickTodoDescription: MyPickTodoDescription = {
    */
   // title: "Pick me",
 };
+

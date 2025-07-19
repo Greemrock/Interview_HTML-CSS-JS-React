@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Pacman</title>
+    <style>
+      .pacman {
+        width: 100px;
+        height: 100px;
+        background: yellow;
+        border-radius: 50%;
+        position: relative;
+        margin: 40px;
+      }
+      .pacman-mouth {
+        width: 100px;
+        height: 100px;
+        background: white;
+        animation: chomp 0.5s infinite alternate;
+        z-index: 5;
+      }
+      .pacman::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #222;
+        border-radius: 50%;
+        left: 60px;
+        top: 20px;
+        z-index: 2;
+      }
+
+      @keyframes chomp {
+        0% {
+          clip-path: polygon(50% 50%, 100% 40%, 100% 100%);
+        }
+        100% {
+          clip-path: polygon(50% 50%, 100% 50%, 100% 50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pacman">
+      <div class="pacman-mouth"></div>
+    </div>
+  </body>
+</html>
